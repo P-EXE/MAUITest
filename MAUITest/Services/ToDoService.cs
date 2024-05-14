@@ -23,14 +23,14 @@ public class ToDoService : IToDoService
     }
     catch (Exception ex)
     {
-
+     
     }
     return success;
   }
 
-  public async Task DeleteToDo(Guid todoId)
+  public async Task DeleteToDo(ToDoItem todo)
   {
-    _context.Remove(todoId);
+    _context.ToDoItems.Remove(todo);
     await _context.SaveChangesAsync();
   }
 
@@ -45,6 +45,7 @@ public class ToDoService : IToDoService
 
   public async Task<IEnumerable<ToDoItem>>? GetToDoItemsByStatus(Status status)
   {
+    // 3 is not present in the status enum so get all
     if (status.Equals(3))
     {
       return await GetAllToDos();

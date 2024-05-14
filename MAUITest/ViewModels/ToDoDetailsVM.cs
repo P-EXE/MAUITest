@@ -112,7 +112,7 @@ public partial class ToDoDetailsVM : ObservableObject
 
     try
     {
-      await _toDoService.DeleteToDo(ToDo.Id);
+      await _toDoService.DeleteToDo(ToDo);
       success = true;
       await Shell.Current.GoToAsync($"//{nameof(ToDoListPage)}");
     }
