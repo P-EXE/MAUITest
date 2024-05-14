@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUITest.TaskEntryPage"
+             Title="TaskEntryPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="titleEntry" Placeholder="Title"/>
+            <Entry x:Name="descriptionEntry" Placeholder="Description"/>
+            <DatePicker x:Name="dueDatePicker"/>
+            <Picker x:Name="statusPicker">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Open</x:String>
+                        <x:String>In Progress</x:String>
+                        <x:String>Completed</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Button Text="Save" Clicked="OnSaveButtonClicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

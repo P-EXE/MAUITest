@@ -4,12 +4,22 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MAUITest"
-    Shell.FlyoutBehavior="Disabled"
     Title="MAUITest">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
 
+    <FlyoutItem Title="All Tasks">
+        <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Open Tasks">
+        <ShellContent ContentTemplate="{DataTemplate local:OpenTasksPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="In Progress Tasks">
+        <ShellContent ContentTemplate="{DataTemplate local:InProgressTasksPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Completed Tasks">
+        <ShellContent ContentTemplate="{DataTemplate local:CompletedTasksPage}" />
+    </FlyoutItem>
 </Shell>
