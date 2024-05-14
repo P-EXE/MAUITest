@@ -38,7 +38,10 @@ public static class MauiProgram
     #region Pages
     builder.Services.AddTransient<ToDoListPage>();
     builder.Services.AddTransient<ToDoListVM>();
-    #endregion
+
+    builder.Services.AddTransient<CreateToDoPage>();
+    builder.Services.AddTransient<CreateToDoVM>();
+    #endregion Pages
 
     return builder.Build();
   }

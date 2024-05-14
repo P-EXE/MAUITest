@@ -3,13 +3,16 @@
     x:Class="MAUITest.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:MAUITest.Pages"
     xmlns:local="clr-namespace:MAUITest"
-    Shell.FlyoutBehavior="Disabled"
-    Title="MAUITest">
+    Shell.FlyoutBehavior="Flyout">
 
-    <ShellContent
-        Title="Home"
+  <ShellContent
+        Title="All"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-
+  <ShellContent
+        Title="New"
+        ContentTemplate="{DataTemplate pages:CreateToDoPage}"
+        Route="CreateToDoPage" />
 </Shell>
