@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using MAUITest.DataContext;
 using MAUITest.Pages;
+using MAUITest.Services;
 using MAUITest.ViewModels;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -35,12 +36,16 @@ public static class MauiProgram
     );
     #endregion DataContext
 
+    #region Services
+    builder.Services.AddTransient<IToDoService, ToDoService>();
+    #endregion Services
+
     #region Pages
     builder.Services.AddTransient<ToDoListPage>();
     builder.Services.AddTransient<ToDoListVM>();
 
-    builder.Services.AddTransient<CreateToDoPage>();
-    builder.Services.AddTransient<CreateToDoVM>();
+    builder.Services.AddTransient<ToDoDetailsPage>();
+    builder.Services.AddTransient<ToDoDetailsVM>();
     #endregion Pages
 
     return builder.Build();

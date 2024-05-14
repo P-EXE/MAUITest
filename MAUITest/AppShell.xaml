@@ -8,11 +8,11 @@
     Shell.FlyoutBehavior="Flyout">
 
   <ShellContent
-        Title="All"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Alle"
+        ContentTemplate="{DataTemplate pages:ToDoListPage}"
+        Route="ToDoListPage" />
   <ShellContent
-        Title="New"
-        ContentTemplate="{DataTemplate pages:CreateToDoPage}"
-        Route="CreateToDoPage" />
+        Title="Neu"
+        ContentTemplate="{DataTemplate pages:ToDoDetailsPage}"
+        Route="ToDoDetailsPage" />
 </Shell>
