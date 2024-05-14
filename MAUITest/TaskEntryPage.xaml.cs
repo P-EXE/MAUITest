@@ -13,15 +13,22 @@ public partial class TaskEntryPage : ContentPage
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        var taskItem = new TaskItem
+        try
         {
-            Title = titleEntry.Text,
-            Description = descriptionEntry.Text,
-            DueDate = dueDatePicker.Date,
-            Status = statusPicker.SelectedItem.ToString()
-        };
+            var taskItem = new TaskItem
+            {
+                Title = titleEntry.Text,
+                Description = descriptionEntry.Text,
+                DueDate = dueDatePicker.Date,
+                Status = statusPicker.SelectedItem.ToString()
+            };
 
-        await _database.SaveTaskAsync(taskItem);
-        await Navigation.PopAsync();
+            await _database.SaveTaskAsync(taskItem);
+            await Navigation.PopAsync();
+        }
+        catch (Exception)
+        {
+            DisplayAlert("Status Error","You have to select a Task status","OK");
+        }
     }
 }
