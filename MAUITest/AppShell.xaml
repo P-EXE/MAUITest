@@ -5,11 +5,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MAUITest"
     Shell.FlyoutBehavior="Disabled"
-    Title="MAUITest">
+    xmlns:pages="clr-namespace:MAUITest.Pages"
+    xmlns:>
 
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-
+    
+    <ShellContent
+        Title="Alle Aufgaben"
+        ContentTemplate="{DataTemplate pages:ToDoListPage}"
+        Route="ToDoListPage" />
+    
+    <ShellContent
+    Title="Alle Aufgaben"
+    ContentTemplate="{DataTemplate pages:ToDoListPage}"
+    Route="ToDoListPage" />
+    
+    <ShellContent
+    Title="Alle Aufgaben"
+    ContentTemplate="{DataTemplate pages:ToDoListPage}"
+    Route="ToDoListPage" />
 </Shell>
