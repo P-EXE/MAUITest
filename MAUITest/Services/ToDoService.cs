@@ -12,12 +12,12 @@ public class ToDoService : IToDoService
     _context = context;
   }
 
-  public async Task<bool> AddToDo(ToDoTask todo)
+  public async Task<bool> AddToDo(ToDoItem todo)
   {
     bool success = false;
     try
     {
-      _context.ToDoTasks.Add(todo);
+      _context.ToDoItems.Add(todo);
       _context.SaveChanges();
       success = true;
     }
@@ -28,12 +28,37 @@ public class ToDoService : IToDoService
     return success;
   }
 
-  public async Task<IEnumerable<ToDoTask>>? GetAllToDos()
+  public async Task DeleteToDo(Guid todoId)
   {
-    IEnumerable<ToDoTask>? todos;
-    todos = _context.ToDoTasks
+    _context.Remove(todoId);
+    await _context.SaveChangesAsync();
+  }
+
+  public async Task<IEnumerable<ToDoItem>>? GetAllToDos()
+  {
+    IEnumerable<ToDoItem>? todos;
+    todos = _context.ToDoItems
       .Where(t => t.Id != null)
       .AsEnumerable();
     return todos;
+  }
+
+  public async Task<IEnumerable<ToDoItem>>? GetToDoItemsByStatus(Status status)
+  {
+    if (status.Equals(3))
+    {
+      return await GetAllToDos();
+    }
+    IEnumerable<ToDoItem>? todos;
+    todos = _context.ToDoItems
+      .Where(t => t.Status == status)
+      .AsEnumerable();
+    return todos;
+  }
+
+  public async Task UpdateToDo(ToDoItem todo)
+  {
+    _context.ToDoItems.Update(todo);
+    await _context.SaveChangesAsync();
   }
 }

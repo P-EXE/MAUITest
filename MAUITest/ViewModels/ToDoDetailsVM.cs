@@ -7,6 +7,7 @@ using MAUITest.Services;
 namespace MAUITest.ViewModels;
 
 [QueryProperty("ToDo", "ToDo")]
+[QueryProperty("Mode", "Mode")]
 public partial class ToDoDetailsVM : ObservableObject
 {
   private readonly IToDoService _toDoService;
@@ -17,20 +18,42 @@ public partial class ToDoDetailsVM : ObservableObject
   }
 
   [ObservableProperty]
+  private PageMode _mode;
+
+  [ObservableProperty]
   private bool _available = true;
 
   [ObservableProperty]
-  private ToDoTask? _toDo;
+  private ToDoItem? _toDo;
 
   [ObservableProperty]
   private string[] _statusTypes =
     [
       "Offen",
       "In Bearbeitung",
-      "Abgeschlossen"
+      "Abgeschlossen",
     ];
+  [ObservableProperty]
+  private int _selectedStatus;
 
   [RelayCommand]
+  private async Task SaveToDo()
+  {
+    switch (Mode)
+    {
+      case PageMode.New:
+        {
+          await AddToDo();
+          break;
+        }
+      case PageMode.Edit:
+        {
+          await UpdateToDo();
+          break;
+        }
+    }
+  }
+
   private async Task AddToDo()
   {
     Available = false;
@@ -38,13 +61,15 @@ public partial class ToDoDetailsVM : ObservableObject
 
     try
     {
-      ToDoTask todo = new()
+      ToDoItem todo = new()
       {
+        Id = new Guid(),
         Title = ToDo.Title,
         Description = ToDo.Description,
         Due = ToDo.Due,
-        Status = ToDo.Status
+        Status = (Status)SelectedStatus
       };
+      success = await _toDoService.AddToDo(todo);
     }
     catch (Exception ex)
     {
@@ -52,11 +77,55 @@ public partial class ToDoDetailsVM : ObservableObject
       return;
     }
 
-    success = await _toDoService.AddToDo(ToDo);
+    ToDo = new();
     Available = true;
 
     if (!success)
     { return; }
     await Shell.Current.GoToAsync($"//{nameof(ToDoListPage)}");
+  }
+
+  private async Task UpdateToDo()
+  {
+    Available = false;
+    bool success = false;
+    try
+    {
+      ToDoItem? todo = ToDo;
+      todo.Status = (Status)SelectedStatus;
+      await _toDoService.UpdateToDo(ToDo);
+      success = true;
+    }
+    catch (Exception ex)
+    {
+
+    }
+    Available = true;
+    await Shell.Current.GoToAsync($"//{nameof(ToDoListPage)}");
+  }
+
+  [RelayCommand]
+  private async Task DeleteToDo()
+  {
+    Available = false;
+    bool success = false;
+
+    try
+    {
+      await _toDoService.DeleteToDo(ToDo.Id);
+      success = true;
+      await Shell.Current.GoToAsync($"//{nameof(ToDoListPage)}");
+    }
+    catch (Exception ex)
+    {
+
+    }
+    Available = true;
+  }
+
+  public enum PageMode
+  {
+    New,
+    Edit
   }
 }

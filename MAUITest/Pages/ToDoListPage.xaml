@@ -5,26 +5,33 @@
              xmlns:v="clr-namespace:MAUITest.Views"
              x:Class="MAUITest.Pages.ToDoListPage"
              x:DataType="vm:ToDoListVM">
-  <RefreshView Command="{Binding RefreshCommand}"
-               IsRefreshing="{Binding IsRefreshing}">
-    <CollectionView SelectionMode="Single"
+  <Grid RowDefinitions="auto,*">
+    <Picker Grid.Row="0"
+            ItemsSource="{Binding Filters}"
+            SelectedIndex="{Binding ActiveFilter}"/>
+    <RefreshView Grid.Row="1"
+                 Command="{Binding RefreshCommand}"
+                 IsRefreshing="{Binding IsRefreshing}">
+      <CollectionView SelectionMode="Single"
                     ItemsSource="{Binding ToDos}"
                     SelectedItem="{Binding SelectedToDo}"
                     SelectionChangedCommand="{Binding NavToToDoCommand}">
-      <CollectionView.ItemTemplate>
-        <DataTemplate>
-          <SwipeView>
-            <v:ToDoListV/>
-            <SwipeView.LeftItems>
-              <SwipeItems>
-                <SwipeItem Text="Offen"
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <SwipeView>
+              <v:ToDoListV/>
+              <SwipeView.RightItems>
+                <SwipeItems Mode="Execute">
+                  <SwipeItem Text="Erledigt"
+                           BackgroundColor="Red"
                            Command="{Binding ChangeToDoStatusCommand}"
-                           CommandParameter="0"/>
-              </SwipeItems>
-            </SwipeView.LeftItems>
-          </SwipeView>
-        </DataTemplate>
-      </CollectionView.ItemTemplate>
-    </CollectionView>
-  </RefreshView>
+                           CommandParameter="{Binding .}"/>
+                </SwipeItems>
+              </SwipeView.RightItems>
+            </SwipeView>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+    </RefreshView>
+  </Grid>
 </ContentPage>

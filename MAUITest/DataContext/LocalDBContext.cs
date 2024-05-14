@@ -5,7 +5,7 @@ namespace MAUITest.DataContext;
 
 public class LocalDBContext : DbContext
 {
-  public DbSet<ToDoTask> ToDoTasks => Set<ToDoTask>();
+  public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
 
   public LocalDBContext(DbContextOptions<LocalDBContext> options) : base(options)
   {
@@ -16,7 +16,7 @@ public class LocalDBContext : DbContext
   {
     base.OnModelCreating(builder);
 
-    builder.Entity<ToDoTask>(t =>
+    builder.Entity<ToDoItem>(t =>
     {
       t.HasKey(t => t.Id);
     });

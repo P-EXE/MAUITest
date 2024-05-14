@@ -29,7 +29,7 @@ public static class MauiProgram
 #endif
 
     #region DataContext
-    SqliteConnection sqliteConnection = new(Statics.LocalDBInMemConn);
+    SqliteConnection sqliteConnection = new(Statics.LocalDBConn);
     sqliteConnection.Open();
     builder.Services.AddDbContext<LocalDBContext>(options =>
       options.UseSqlite(sqliteConnection)
