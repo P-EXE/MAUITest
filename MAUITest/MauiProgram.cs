@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using MAUITest.DataContext;
+using MAUITest.Pages;
+using MAUITest.ViewModels;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -25,11 +27,18 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
+    #region DataContext
     SqliteConnection sqliteConnection = new(Statics.LocalDBInMemConn);
     sqliteConnection.Open();
     builder.Services.AddDbContext<LocalDBContext>(options =>
       options.UseSqlite(sqliteConnection)
     );
+    #endregion DataContext
+
+    #region Pages
+    builder.Services.AddTransient<ToDoListPage>();
+    builder.Services.AddTransient<ToDoListVM>();
+    #endregion
 
     return builder.Build();
   }
